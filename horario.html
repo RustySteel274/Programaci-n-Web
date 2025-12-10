@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Horario de Clases - Diseño Propio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --header-bg: #4a90e2;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --hover-color: #e6f0fa;
+            --materia-requisitos: #a8d5ba;
+            --materia-proyectos: #fbd786;
+            --materia-programacion: #ffad99;
+            --materia-ingles: #8ecae6;
+            --materia-receso: #cccccc;
+            --materia-valores: #c7a4ff;
+            --materia-lya: #b2e0e0;
+            --empty-slot: #f8f8f8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 30px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            line-height: 1.5;
+        }
+
+        .schedule-container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--header-bg);
+            padding: 30px 20px;
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th {
+            background-color: var(--header-bg);
+            color: #ffffff;
+            padding: 18px 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 12px;
+            border-right: none;
+        }
+        
+        td.time-slot {
+            background-color: #f7f7f7;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 15px 10px;
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        td {
+            padding: 15px 10px;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        td:last-child {
+            border-right: none;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .materia-requisitos { background-color: var(--materia-requisitos); }
+        .materia-proyectos { background-color: var(--materia-proyectos); }
+        .materia-programacion { background-color: var(--materia-programacion); }
+        .materia-ingles { background-color: var(--materia-ingles); }
+        .materia-receso { 
+            background-color: var(--materia-receso); 
+            color: var(--text-color);
+            font-style: italic;
+            font-weight: 400;
+        }
+        .materia-valores { background-color: var(--materia-valores); }
+        .materia-lya { background-color: var(--materia-lya); }
+        
+        .empty {
+            background-color: var(--empty-slot);
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+        td:not(.time-slot):not(.empty):not(.materia-receso):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8rem;
+                padding: 20px 15px;
+            }
+            th, td {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+            td.time-slot {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .schedule-container {
+                overflow-x: auto;
+                border-radius: 8px;
+            }
+            table {
+                min-width: 600px;
+            }
+            th, td {
+                font-size: 0.75rem;
+                padding: 10px 5px;
+            }
+            td.time-slot {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="schedule-container">
+        <h1>Mi Horario Semanal</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="time-slot">7:00 - 7:54</td>
+                    <td class="materia-requisitos">Requisitos</td>
+                    <td class="materia-requisitos">Requisitos</td>
+                    <td class="materia-requisitos">Requisitos</td>
+                    <td class="materia-requisitos">Requisitos</td>
+                    <td class="empty"></td>
+                </tr>
+                <tr>
+                    <td class="time-slot">7:55 - 8:49</td>
+                    <td class="materia-proyectos">Proyectos</td>
+                    <td class="materia-proyectos">Proyectos</td>
+                    <td class="materia-proyectos">Proyectos</td>
+                    <td class="materia-proyectos">Proyectos</td>
+                    <td class="materia-proyectos">Proyectos</td>
+                </tr>
+                <tr>
+                    <td class="time-slot">8:50 - 9:44</td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="materia-programacion">Programación</td>
+                </tr>
+                <tr>
+                    <td class="time-slot">9:45 - 10:39</td>
+                    <td class="materia-ingles">Inglés</td>
+                    <td class="materia-ingles">Inglés</td>
+                    <td class="materia-ingles">Inglés</td>
+                    <td class="materia-ingles">Inglés</td>
+                    <td class="materia-ingles">Inglés</td>
+                </tr>
+                <tr>
+                    <td class="time-slot">10:40 - 11:09</td>
+                    <td colspan="5" class="materia-receso">Receso</td>
+                </tr>
+                <tr>
+                    <td class="time-slot">11:10 - 12:04</td>
+                    <td class="materia-ingles">Inglés</td>
+                    <td class="materia-programacion">Programación</td>
+                    <td class="materia-programacion">Programación</td>
+                    <td class="materia-lya">LyA</td>
+                    <td class="materia-lya">LyA</td>
+                </tr>
+                <tr>
+                    <td class="time-slot">12:05 - 12:59</td>
+                    <td class="materia-valores">Valores</td>
+                    <td class="materia-valores">Valores</td>
+                    <td class="materia-valores">Valores</td>
+                    <td class="materia-lya">LyA</td>
+                    <td class="materia-lya">LyA</td>
+                </tr>
+                <tr>
+                    <td class="time-slot">1:00 - 1:54</td>
+                    <td class="materia-lya">LyA</td>
+                    <td class="materia-lya">LyA</td>
+                    <td class="materia-lya">LyA</td>
+                    <td class="materia-programacion">Programación</td>
+                    <td class="empty"></td>
+                </tr>
+                <tr>
+                    <td class="time-slot">2:00 - 2:54</td>
+                    <td class="materia-lya">LyA</td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="materia-programacion">Programación</td>
+                    <td class="empty"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
